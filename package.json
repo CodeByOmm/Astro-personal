@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run copy-assets",
     "preview": "astro preview",
+    "copy-assets": "node scripts/copy-assets.js",
     "astro": "astro",
     "format": "npx prettier . --write",
     "format:check": "prettier --check \"**/*.{js,ts,jsx,tsx,astro,css,scss,html,md,json}\""
@@ -16,7 +17,9 @@
     "astro": "^5.5.5",
     "flatpickr": "^4.6.13",
     "flyonui": "^2.4.1",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "tailwindcss-intersect": "^2.2.0",
+    "tailwindcss-motion": "^1.1.1"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.321",

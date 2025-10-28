@@ -1,9 +1,11 @@
 @import 'tailwindcss';
+@import "tailwindcss-intersect";
+@plugin "tailwindcss-motion";
 @plugin 'flyonui' {
   themes: all;
 }
 @plugin '@iconify/tailwind4';
 @import 'flyonui/variants.css';
-@source '/public/vendor/flyonui.js';
+@source '/assets/libs/flyonui/flyonui.js';
 
 @import "flyonui/src/vendor/flatpickr.css";
