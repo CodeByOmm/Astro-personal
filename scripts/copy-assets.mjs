@@ -20,11 +20,21 @@ const assets = {
 const initPath = resolve(__dirname, '../node_modules');
 const outputPath = resolve(__dirname, '../public/assets/libs');
 
+// Ensure the output directory exists
+mkdirSync(outputPath, { recursive: true });
+
+// Copy all assets
 Object.values(assets).forEach(asset => {
   asset.src.forEach(srcFile => {
-    const src = join(initPath, srcFile);
-    const dest = join(outputPath, srcFile);
-    mkdirSync(dirname(dest), { recursive: true });
-    copyFileSync(src, dest);
+    try {
+      const src = join(initPath, srcFile);
+      const dest = join(outputPath, srcFile);
+      mkdirSync(dirname(dest), { recursive: true });
+      copyFileSync(src, dest);
+      console.log(`Successfully copied ${srcFile}`);
+    } catch (error) {
+      console.error(`Error copying ${srcFile}:`, error);
+      // Don't throw, continue with other files
+    }
   });
 });
