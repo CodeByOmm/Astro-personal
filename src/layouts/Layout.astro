@@ -2,6 +2,8 @@
 interface Props {
   title: string;
 }
+
+import 'flatpickr/dist/flatpickr.css';
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
 import { siteConfig } from '../config.js';
@@ -28,7 +30,7 @@ const { title } = Astro.props;
     <meta property="og:description" content={templateDescription} />
     <meta property="og:site_name" content={siteConfig.creatorName} />
     <meta property="og:url" content={siteConfig.productPage} />
-    <link rel="stylesheet" href="../../node_modules/flatpickr/dist/flatpickr.css" />
+    <!-- <link rel="stylesheet" href="../../node_modules/flatpickr/dist/flatpickr.css" /> -->
 
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
