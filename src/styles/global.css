@@ -4,4 +4,4 @@
 }
 @plugin '@iconify/tailwind4';
 @import 'flyonui/variants.css';
-@source '/src/assets/js/flyonui/flyonui.js';
+@source '/public/vendor/flyonui.js';
