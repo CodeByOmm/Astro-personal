@@ -27,6 +27,9 @@ yarn-error.log*
 
 # Dependency directories
 node_modules
+.astro
+.vercel
+public/assets/libs
 
 # Optional npm cache directory
 .npm
@@ -47,5 +50,3 @@ node_modules
 /tmp
 /temp
 /html
-
-public/assets/libs/
