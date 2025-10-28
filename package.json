@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run copy-assets",
+    "build": "npm run copy-assets && astro build",
     "preview": "astro preview",
     "copy-assets": "node scripts/copy-assets.js",
     "astro": "astro",

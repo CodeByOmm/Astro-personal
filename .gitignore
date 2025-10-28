@@ -48,6 +48,4 @@ node_modules
 /temp
 /html
 
-# Assets (keep public/assets)
-**/assets/dist
-!public/assets/
+public/assets/libs/
