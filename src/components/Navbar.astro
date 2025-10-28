@@ -1,0 +1,47 @@
+---
+import { siteConfig } from '../config.js';
+import Logo from './shared/Logo.astro';
+---
+
+<header class="border-base-content/20 bg-base-100 fixed top-0 z-10 w-full border-b py-0.25">
+  <nav class={`navbar ${siteConfig.container} mx-auto rounded-b-xl px-4 sm:px-6 lg:px-8`}>
+    <div class="w-full lg:flex lg:items-center lg:gap-2">
+      <div class="navbar-start items-center justify-between max-lg:w-full">
+        <a class="text-base-content flex items-center gap-3 text-xl font-semibold" href="#">
+          <Logo />
+          AstroOm
+        </a>
+        <div class="flex items-center gap-5 lg:hidden">
+          <a href="#contact-us" class="btn btn-primary btn-sm">Book A Table</a>
+          <button
+            type="button"
+            class="collapse-toggle btn btn-outline btn-secondary btn-square"
+            data-collapse="#navbar-block-4"
+            aria-controls="navbar-block-4"
+            aria-label="Toggle navigation"
+          >
+            <span class="icon-[tabler--menu-2] collapse-open:hidden size-5.5"></span>
+            <span class="icon-[tabler--x] collapse-open:block hidden size-5.5"></span>
+          </button>
+        </div>
+      </div>
+      <div
+        id="navbar-block-4"
+        class="lg:navbar-center transition-height collapse hidden grow overflow-hidden font-medium duration-300 lg:flex"
+      >
+        <div
+          class="text-base-content flex gap-6 text-base max-lg:mt-4 max-lg:flex-col lg:items-center"
+        >
+          <a href="#home" class="hover:text-primary nav-link">Home</a>
+          <a href="#about-us" class="hover:text-primary nav-link">About Us</a>
+          <a href="#services" class="hover:text-primary nav-link">Services</a>
+          <a href="#team" class="hover:text-primary nav-link">Team</a>
+          <a href="#faqs" class="hover:text-primary nav-link">FAQS</a>
+        </div>
+      </div>
+      <div class="navbar-end max-lg:hidden">
+        <a href="#contact-us" class="btn btn-primary">Book A Table</a>
+      </div>
+    </div>
+  </nav>
+</header>

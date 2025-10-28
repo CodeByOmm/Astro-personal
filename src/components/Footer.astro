@@ -1,0 +1,59 @@
+---
+import { siteConfig } from '../config.js';
+import Logo from './shared/Logo.astro';
+---
+
+<footer>
+  <div class={`${siteConfig.container} mx-auto px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8`}>
+    <div class="flex items-center justify-between gap-3 max-md:flex-col">
+      <a href="/" class="text-base-content flex items-center gap-3 text-xl font-semibold">
+        <Logo />
+        <span>Restaurant</span>
+      </a>
+      <nav class="flex items-center gap-6">
+        <a href="#about-us" class="link link-animated text-base-content/80 font-medium">About</a>
+        <a href="#services" class="link link-animated text-base-content/80 font-medium">Services</a>
+        <a href="#team" class="link link-animated text-base-content/80 font-medium">Team</a>
+        <a href="#faq" class="link link-animated text-base-content/80 font-medium">FAQ</a>
+      </nav>
+      <div class="text-base-content flex h-5 gap-4">
+        <a
+          href={siteConfig.discordUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Discord"
+        >
+          <span class="icon-[tabler--brand-discord] size-5"></span>
+        </a>
+        <a
+          href={siteConfig.twitterUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Twitter"
+        >
+          <span class="icon-[tabler--brand-x] size-5"></span>
+        </a>
+        <a
+          href={siteConfig.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Github"
+        >
+          <span class="icon-[tabler--brand-github] size-5"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class={`${siteConfig.container} mx-auto px-4 py-8 sm:px-6 lg:px-8`}>
+    <div class="text-base-content text-center text-base">
+      &copy;2025
+      <a href="/" class="text-primary">{siteConfig.templateName}</a>
+      ,
+      <br class="md:hidden" />
+      Made With ❤️ for better web.
+    </div>
+  </div>
+</footer>
