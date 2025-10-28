@@ -1,12 +1,12 @@
 {
   "name": "flyonui-astro",
-  "type": "commonjs",
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && npm run copy-assets",
     "preview": "astro preview",
-    "copy-assets": "node scripts/copy-assets.mjs",
+    "copy-assets": "node scripts/copy-assets.js",
     "astro": "astro",
     "format": "npx prettier . --write",
     "format:check": "prettier --check \"**/*.{js,ts,jsx,tsx,astro,css,scss,html,md,json}\""

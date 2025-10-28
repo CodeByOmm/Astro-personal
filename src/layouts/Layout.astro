@@ -132,10 +132,24 @@ const { title } = Astro.props;
       </main>
       <Footer />
     </div>
-    <!-- <script src="/vendor/flyonui.js" defer></script> -->
-<script is:inline src="/assets/libs/tailwindcss-intersect/dist/observer.min.js"></script>
-<script is:inline src="/assets/libs/flatpickr/dist/flatpickr.js"></script>
-<script is:inline src="/assets/libs/flyonui/flyonui.js"></script>
+    <script is:inline>
+      // Import scripts dynamically to ensure they load in the correct order
+      const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+      };
 
+      // Load scripts in sequence
+      Promise.resolve()
+        .then(() => loadScript('/assets/libs/tailwindcss-intersect/dist/observer.min.js'))
+        .then(() => loadScript('/assets/libs/flatpickr/dist/flatpickr.js'))
+        .then(() => loadScript('/assets/libs/flyonui/flyonui.js'))
+        .catch(console.error);
+    </script>
   </body>
   </html>
