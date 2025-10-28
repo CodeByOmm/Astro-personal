@@ -5,3 +5,5 @@
 @plugin '@iconify/tailwind4';
 @import 'flyonui/variants.css';
 @source '/public/vendor/flyonui.js';
+
+@import "flyonui/src/vendor/flatpickr.css";
