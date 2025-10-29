@@ -1,0 +1,122 @@
+---
+/**
+ * OptimizedImage Component
+ * 
+ * A wrapper component for images that provides:
+ * - Lazy loading by default
+ * - Proper aspect ratio (prevents layout shift)
+ * - Optional WebP support with fallback
+ * - Responsive image sizing
+ * 
+ * Use this for images in public/ folder
+ * For images that need processing, use Astro's Image component instead
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+  fetchpriority?: 'high' | 'low' | 'auto';
+  sizes?: string;
+  webp?: boolean; // Set to true if you have a .webp version
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  loading = 'lazy',
+  class: className = '',
+  fetchpriority = 'auto',
+  sizes,
+  webp = false
+} = Astro.props;
+
+// Generate WebP path if enabled
+const webpSrc = webp ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp') : null;
+---
+
+{webp && webpSrc ? (
+  <!-- Picture element with WebP support -->
+  <picture>
+    <!-- Modern browsers (WebP) -->
+    <source srcset={webpSrc} type="image/webp" sizes={sizes} />
+    
+    <!-- Fallback for older browsers -->
+    <img 
+      src={src} 
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class={className}
+      decoding="async"
+    />
+  </picture>
+) : (
+  <!-- Standard img element -->
+  <img 
+    src={src} 
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={className}
+    decoding="async"
+  />
+)}
+
+<!--
+Usage Examples:
+
+1. Basic usage:
+<OptimizedImage 
+  src="/assets/img/dishes-hero.png"
+  alt="Delicious dishes"
+  width={1200}
+  height={800}
+/>
+
+2. With lazy loading disabled (above the fold):
+<OptimizedImage 
+  src="/assets/img/hero-bg.png"
+  alt="Hero background"
+  width={1920}
+  height={1080}
+  loading="eager"
+  fetchpriority="high"
+/>
+
+3. With WebP support (if you have .webp versions):
+<OptimizedImage 
+  src="/assets/img/about.png"
+  alt="About us"
+  width={800}
+  height={600}
+  webp={true}
+/>
+
+4. With custom classes:
+<OptimizedImage 
+  src="/assets/img/team-member.png"
+  alt="Team member"
+  width={400}
+  height={400}
+  class="rounded-full border-4 border-primary"
+/>
+
+5. Responsive with sizes:
+<OptimizedImage 
+  src="/assets/img/product.png"
+  alt="Product"
+  width={1200}
+  height={800}
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+/>
+-->

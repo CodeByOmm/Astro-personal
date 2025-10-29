@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config.js';
+import OptimizedImage from './shared/OptimizedImage.astro';
 ---
 
 <section id="about-us">
@@ -23,9 +24,11 @@ import { siteConfig } from '../config.js';
         <div
           class="relative mb-8 h-full w-full rounded-xl max-lg:space-y-6 sm:mb-16 lg:mb-24 lg:h-161"
         >
-          <img
-            src="/images/restaurant-about-us.png"
-            alt="about-us"
+          <OptimizedImage
+            src="/assets/img/restaurant-about-us.png"
+            alt="About our restaurant - Interior and dining experience"
+            width={1200}
+            height={800}
             class="h-full w-full rounded-xl object-cover"
           />
           <!-- Stats card overlapping the video section -->

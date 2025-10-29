@@ -1,0 +1,32 @@
+---
+// Call to Action section
+import { siteConfig } from '../config.js';
+---
+
+<section id="cta">
+  <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class={`${siteConfig.container} mx-auto px-4 sm:px-6 lg:px-8`}>
+      <div class="from-primary/30 to-error/30 p-0.25 overflow-hidden rounded-3xl bg-gradient-to-r">
+        <div class="bg-base-100 rounded-3xl p-0.5">
+          <div class="from-primary/6 to-error/6 relative rounded-3xl bg-gradient-to-r to-50% p-8 lg:p-16">
+            <div class="flex justify-between gap-8 max-md:flex-col max-sm:items-center max-sm:text-center md:items-center">
+              <div class="max-w-xs space-y-4 lg:max-w-lg">
+                <h2 class="text-base-content text-xl font-bold md:text-3xl">Order Now & Satisfy Your Cravings</h2>
+                <p class="text-base-content/80">Let us bring the flavors you love straight to your door. From classic comfort dishes to chef-curated specials, every bite is made with care and delivered fresh. Skip the wait — your next favorite meal is just a click away.</p>
+                <a class="btn btn-gradient btn-primary" href="#contact-us">
+                  Order Now
+                  <span class="icon-[tabler--arrow-right]"></span>
+                </a>
+              </div>
+              <img src="/assets/img/mint.png" alt="mint" class="intersect-once intersect:motion-preset-slide-down-lg intersect:motion-duration-800 intersect:motion-opacity-in-0 intersect:motion-delay-100 absolute end-[21%] top-0 h-20 max-w-sm max-md:hidden" />
+              <img src="/assets/img/pizza.png" alt="Pizza" class="rtl:rotate-y-180 absolute end-0 top-0 h-full max-w-md rounded-br-3xl max-md:hidden" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Separator -->
+<div class="via-primary/20 mx-auto h-px w-3/5 bg-gradient-to-r from-transparent to-transparent"></div>

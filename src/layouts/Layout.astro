@@ -1,36 +1,47 @@
 ---
 interface Props {
   title: string;
+  description?: string;
 }
-// import 'tailwindcss-intersect/dist/observer.min.js';
 import Footer from '../components/Footer.astro';
-import Navbar from '../components/Navbar.astro';
+import ClientScripts from '../components/ClientScripts.astro';
 import { siteConfig } from '../config.js';
+import { generatePageTitle, generateMetaDescription } from '../utils/styles.js';
 import '../styles/global.css';
-const templateDescription = ` ~ ${siteConfig.templateName} A free, open-source, responsive landing page template built with Astro and FlyonUI.`;
-const { title } = Astro.props;
+
+const { title, description } = Astro.props;
+const pageTitle = generatePageTitle(title);
+const metaDescription = generateMetaDescription(description || '');
 
 // TODO: Package
 // const isPackage = Astro.env === "package"; // Adjust this as necessary based on your actual setup
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="light" data-assets-path="/assets/" data-layout-path="free-landing-page/" dir="ltr" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="description" content={metaDescription} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <!-- Favicon - Multiple formats for better browser support -->
+    <link rel="icon" type="image/x-icon" href={siteConfig.faviconUrl} />
+    <!-- Add more favicon formats here if you have them:
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    -->
+    
     <meta name="generator" content={Astro.generator} />
     <meta name="keywords" content={siteConfig.templateKeyword} />
     <meta property="og:title" content={siteConfig.ogTitle} />
     <meta property="og:type" content={siteConfig.ogType} />
     <meta property="og:image" content={siteConfig.ogImage} />
-    <meta property="og:description" content={templateDescription} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:site_name" content={siteConfig.creatorName} />
     <meta property="og:url" content={siteConfig.productPage} />
-    <link rel="stylesheet" href="/assets/libs/flatpickr/dist/flatpickr.css" />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
@@ -55,87 +66,63 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&ampdisplay=swap"
       rel="stylesheet"
     />
-    <title>
-      {title} | {siteConfig.templateName} - {siteConfig.templateSuffix}
-    </title>
-
-    // TODO: Package
-    <!-- Conditional Title -->
-    <!-- <title>
-      {isPackage
-        ? `${title} | ${siteConfig.templateSuffix}`
-        : `${title} | ${siteConfig.templateName} - ${siteConfig.templateSuffix}`}
-    </title> -->
-
+    <title>{pageTitle}</title>
+    
     <!-- Theme JS -->
-    <!-- <script is:inline define:vars={{ layoutPath, templateName }}>
+    <script is:inline>
       (function () {
         try {
           const root = document.documentElement;
-          const layoutPathClean =
-            layoutPath?.replace("/", "") || "free-landing-page";
-          const localStorageKey = `${layoutPathClean}-theme`;
+          const layoutPath = 'free-landing-page';
+          const localStorageKey = `${layoutPath}-theme`;
 
-          // Theme configuration loaded from page-config.json at build time
-          window.THEME_CONFIG = {
-            "free-landing-page": {
-              default: "light",
-              light: "light",
-              dark: "dark",
-              system: { light: "light", dark: "dark" },
-            },
+          // Theme configuration
+          window.THEME_CONFIG = { 
+            'free-landing-page': { 
+              default: 'light', 
+              light: 'light', 
+              dark: 'dark', 
+              system: { light: 'light', dark: 'dark' } 
+            } 
           };
 
           // Get current system theme preference
-          const getSystemPreference = () =>
-            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const getSystemPreference = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
 
           // Resolve theme based on user selection and layout configuration
           const resolveTheme = (selectedTheme, layoutPath) => {
             const layoutConfig = window.THEME_CONFIG[layoutPath];
-            if (!layoutConfig)
-              return selectedTheme === "system"
-                ? getSystemPreference()
-                  ? "dark"
-                  : "light"
-                : selectedTheme;
+            if (!layoutConfig) return selectedTheme === 'system' ? (getSystemPreference() ? 'dark' : 'light') : selectedTheme;
 
-            if (selectedTheme === "system") {
+            if (selectedTheme === 'system') {
               const systemConfig = layoutConfig.system;
               const prefersDark = getSystemPreference();
               return prefersDark ? systemConfig.dark : systemConfig.light;
             }
 
-            return (
-              layoutConfig[selectedTheme] ||
-              selectedTheme ||
-              layoutConfig.default ||
-              "light"
-            );
+            return layoutConfig[selectedTheme] || selectedTheme || layoutConfig.default || 'light';
           };
 
-          const savedTheme = localStorage.getItem(localStorageKey) || "system";
-          const resolvedTheme = resolveTheme(savedTheme, layoutPathClean);
+          const savedTheme = localStorage.getItem(localStorageKey) || 'system';
+          const resolvedTheme = resolveTheme(savedTheme, layoutPath);
 
-          root.setAttribute("data-theme", resolvedTheme);
+          root.setAttribute('data-theme', resolvedTheme);
+          root.setAttribute('data-assets-path', '/assets/');
+          root.setAttribute('data-layout-path', 'free-landing-page/');
         } catch (e) {
-          console.warn("Early theme script error:", e);
+          console.warn('Early theme script error:', e);
         }
       })();
-    </script> -->
+    </script>
   </head>
-  <body class="font-inter">
-    <div class="flex min-h-screen flex-col">
-      <Navbar />
-      <main class="grow">
-        <slot />
-      </main>
-      <Footer />
-    </div>
-    <!-- <script src="/vendor/flyonui.js" defer></script> -->
-<script is:inline src="/assets/libs/tailwindcss-intersect/dist/observer.min.js"></script>
-<script is:inline src="/assets/libs/flatpickr/dist/flatpickr.js"></script>
-<script is:inline src="/assets/libs/flyonui/flyonui.js"></script>
-
+  <body>
+    <!-- Layout wrapper -->
+    <!-- Content -->
+    <slot />
+    <Footer />
+    
+    <!-- Client-side Scripts -->
+    <ClientScripts />
   </body>
-  </html>
+</html>
+

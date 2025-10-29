@@ -1,12 +1,11 @@
 ---
 import { siteConfig } from '../config.js';
-import Animation from './Animation.astro';
-import Flatpickr from './Flatpickr.astro';
+import OptimizedImage from './shared/OptimizedImage.astro';
 ---
 
 <section id="home">
   <div
-    class="flex h-full flex-col justify-between gap-18 bg-[url('/images/free-layer-blur.png')] bg-cover bg-center bg-no-repeat py-8 pt-40 sm:py-16 md:gap-24 md:pt-45 lg:gap-35 lg:py-24 lg:pt-47.5"
+    class="flex h-full flex-col justify-between gap-18 bg-[url('/assets/img/free-layer-blur.png')] bg-cover bg-center bg-no-repeat py-8 pt-40 sm:py-16 md:gap-24 md:pt-45 lg:gap-35 lg:py-24 lg:pt-47.5"
   >
     <div
       class={`${siteConfig.container} mx-auto flex flex-col items-center gap-6 justify-self-center px-4 text-center sm:px-6 lg:px-8 `}
@@ -60,9 +59,17 @@ import Flatpickr from './Flatpickr.astro';
         Experience the Flavor
         <span class="icon-[tabler--arrow-right] size-5 rtl:rotate-180"></span>
       </a>
-      <div><Flatpickr /></div>
-      <div><Animation /></div>
     </div>
-    <img src="/images/dishes-hero.png" alt="Dishes" class="min-h-67 w-full object-cover" />
+    
+    <!-- Using OptimizedImage component with proper attributes -->
+    <OptimizedImage
+      src="/assets/img/dishes-hero.png"
+      alt="Delicious dishes served at our restaurant"
+      width={1920}
+      height={1080}
+      loading="eager"
+      fetchpriority="high"
+      class="min-h-67 w-full object-cover"
+    />
   </div>
 </section>
