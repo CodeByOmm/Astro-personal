@@ -4,7 +4,9 @@ interface Props {
   description?: string;
 }
 import Footer from '../components/Footer.astro';
+import Navbar from '../components/Navbar.astro';
 import ClientScripts from '../components/ClientScripts.astro';
+import ThemeCustomizer from '../components/ThemeCustomizer.astro';
 import { siteConfig } from '../config.js';
 import { generatePageTitle, generateMetaDescription } from '../utils/styles.js';
 import '../styles/global.css';
@@ -68,58 +70,38 @@ const metaDescription = generateMetaDescription(description || '');
     />
     <title>{pageTitle}</title>
     
-    <!-- Theme JS -->
+    <!-- Simple Theme Initialization -->
     <script is:inline>
+      // Simple theme initialization - starts with light theme
+      // Theme customizer will handle switching after page load
       (function () {
         try {
-          const root = document.documentElement;
-          const layoutPath = 'free-landing-page';
-          const localStorageKey = `${layoutPath}-theme`;
-
-          // Theme configuration
-          window.THEME_CONFIG = { 
-            'free-landing-page': { 
-              default: 'light', 
-              light: 'light', 
-              dark: 'dark', 
-              system: { light: 'light', dark: 'dark' } 
-            } 
-          };
-
-          // Get current system theme preference
-          const getSystemPreference = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-          // Resolve theme based on user selection and layout configuration
-          const resolveTheme = (selectedTheme, layoutPath) => {
-            const layoutConfig = window.THEME_CONFIG[layoutPath];
-            if (!layoutConfig) return selectedTheme === 'system' ? (getSystemPreference() ? 'dark' : 'light') : selectedTheme;
-
-            if (selectedTheme === 'system') {
-              const systemConfig = layoutConfig.system;
-              const prefersDark = getSystemPreference();
-              return prefersDark ? systemConfig.dark : systemConfig.light;
-            }
-
-            return layoutConfig[selectedTheme] || selectedTheme || layoutConfig.default || 'light';
-          };
-
-          const savedTheme = localStorage.getItem(localStorageKey) || 'system';
-          const resolvedTheme = resolveTheme(savedTheme, layoutPath);
-
-          root.setAttribute('data-theme', resolvedTheme);
-          root.setAttribute('data-assets-path', '/assets/');
-          root.setAttribute('data-layout-path', 'free-landing-page/');
+          // Check if user has a saved theme preference
+          const savedTheme = localStorage.getItem('selected-theme');
+          const savedDirection = localStorage.getItem('layout-direction') || 'ltr';
+          
+          // Apply saved theme or default to light
+          const theme = savedTheme || 'light';
+          
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.setAttribute('dir', savedDirection);
         } catch (e) {
-          console.warn('Early theme script error:', e);
+          // Fallback to light theme
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.setAttribute('dir', 'ltr');
         }
       })();
     </script>
   </head>
   <body>
     <!-- Layout wrapper -->
+     <Navbar />
     <!-- Content -->
     <slot />
     <Footer />
+    
+    <!-- Theme Customizer -->
+    <ThemeCustomizer />
     
     <!-- Client-side Scripts -->
     <ClientScripts />

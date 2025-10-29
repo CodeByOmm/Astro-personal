@@ -3,120 +3,139 @@
 ---
 
 <script>
-  
   // Import Flatpickr - CSS and JS will be bundled by Astro/Vite
-  import flatpickr from 'flatpickr';
-  import 'flatpickr/dist/flatpickr.min.css';
-  
+  import 'flatpickr/dist/flatpickr.js';
+
   // Import FlyonUI - will be bundled by Astro/Vite automatically
   import 'flyonui/flyonui.js';
 </script>
 
 <!-- Counter animation script -->
 <script>
-// Counter animation for stats
-function animateCounter(element, target, duration = 2000) {
-  const start = 0;
-  const increment = target / (duration / 16);
-  let current = start;
+  // Counter animation for stats
+  function animateCounter(element, target, duration = 2000) {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
 
-  const timer = setInterval(() => {
-    current += increment;
-    if (current >= target) {
-      let displayValue = target;
-      let suffix = '+';
-      
-      if (target >= 10000) {
-        displayValue = Math.floor(target / 1000);
-        suffix = 'k+';
-      } else if (target >= 5000) {
-        displayValue = Math.floor(target / 1000);
-        suffix = 'k+';
-      } else if (target >= 1000) {
-        displayValue = Math.floor(target / 1000);
-        suffix = 'k+';
-      }
-      
-      element.textContent = displayValue + suffix;
-      clearInterval(timer);
-    } else {
-      let displayValue = Math.floor(current);
-      let suffix = '+';
-      
-      if (target >= 1000) {
-        displayValue = Math.floor(current / 1000);
-        suffix = 'k+';
-        if (displayValue === 0) {
-          displayValue = Math.floor(current);
-          suffix = '+';
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        let displayValue = target;
+        let suffix = '+';
+
+        if (target >= 10000) {
+          displayValue = Math.floor(target / 1000);
+          suffix = 'k+';
+        } else if (target >= 5000) {
+          displayValue = Math.floor(target / 1000);
+          suffix = 'k+';
+        } else if (target >= 1000) {
+          displayValue = Math.floor(target / 1000);
+          suffix = 'k+';
         }
-      }
-      
-      element.textContent = displayValue + suffix;
-    }
-  }, 16);
-}
 
-// Initialize counters when they come into view
-function initCounters() {
-  const counters = [
-    { id: 'count1', target: 10 },
-    { id: 'count2', target: 150 },
-    { id: 'count3', target: 5 }, // Will display as 5k+
-    { id: 'count4', target: 10 } // Will display as 10k+
-  ];
+        element.textContent = displayValue + suffix;
+        clearInterval(timer);
+      } else {
+        let displayValue = Math.floor(current);
+        let suffix = '+';
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const counterId = entry.target.id;
-        const counter = counters.find(c => c.id === counterId);
-        if (counter) {
-          // Use different target values for k+ display
-          let animationTarget = counter.target;
-          if (counter.id === 'count3') animationTarget = 5000; // 5k+
-          if (counter.id === 'count4') animationTarget = 10000; // 10k+
-          
-          animateCounter(entry.target, animationTarget);
-          observer.unobserve(entry.target);
+        if (target >= 1000) {
+          displayValue = Math.floor(current / 1000);
+          suffix = 'k+';
+          if (displayValue === 0) {
+            displayValue = Math.floor(current);
+            suffix = '+';
+          }
         }
+
+        element.textContent = displayValue + suffix;
+      }
+    }, 16);
+  }
+
+  // Initialize counters when they come into view
+  function initCounters() {
+    const counters = [
+      { id: 'count1', target: 10 },
+      { id: 'count2', target: 150 },
+      { id: 'count3', target: 5 }, // Will display as 5k+
+      { id: 'count4', target: 10 } // Will display as 10k+
+    ];
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counterId = entry.target.id;
+            const counter = counters.find(c => c.id === counterId);
+            if (counter) {
+              // Use different target values for k+ display
+              let animationTarget = counter.target;
+              if (counter.id === 'count3') animationTarget = 5000; // 5k+
+              if (counter.id === 'count4') animationTarget = 10000; // 10k+
+
+              animateCounter(entry.target, animationTarget);
+              observer.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    counters.forEach(counter => {
+      const element = document.getElementById(counter.id);
+      if (element) {
+        // Set initial display values to match final format
+        if (counter.id === 'count3' || counter.id === 'count4') {
+          element.textContent = '0k+';
+        } else {
+          element.textContent = '0+';
+        }
+        observer.observe(element);
       }
     });
-  }, { threshold: 0.5 });
+  }
 
-  counters.forEach(counter => {
-    const element = document.getElementById(counter.id);
-    if (element) {
-      // Set initial display values to match final format
-      if (counter.id === 'count3' || counter.id === 'count4') {
-        element.textContent = '0k+';
-      } else {
-        element.textContent = '0+';
-      }
-      observer.observe(element);
-    }
-  });
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initCounters);
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', initCounters);
 </script>
+
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');  // Select all your sections
+    const navLinks = document.querySelectorAll('.nav-link');     // Select all your navigation links
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80;  // Adjust for fixed navbar height
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('text-primary');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('text-primary');
+        }
+      });
+    });
+  });
+</script>
+
 
 <!-- Initialize Flatpickr for date inputs -->
 <script>
-  // Import Flatpickr in this script block as well since each script block is isolated
   import flatpickr from 'flatpickr';
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize flatpickr for date inputs
-    const dateInputs = document.querySelectorAll('.flatpickr-date');
-    if (dateInputs.length > 0) {
-      dateInputs.forEach(input => {
-        flatpickr(input, {
-          dateFormat: "m/d/y",
-          minDate: "today"
-        });
-      });
-    }
+  window.addEventListener('load', () => {
+    flatpickr('.flatpickr-date', {
+      monthSelectorType: 'static'
+    });
   });
 </script>

@@ -1,0 +1,362 @@
+---
+/**
+ * Simple Theme Customizer - Clean HTML-based approach
+ * Starts with light theme, allows dynamic switching
+ */
+---
+
+<!-- Theme Toggle Button -->
+<button
+  id="theme-customizer-toggle"
+  class="btn btn-primary btn-circle fixed top-1/2 right-4 z-50 shadow-lg transform -translate-y-1/2"
+  aria-label="Open theme customizer"
+>
+  <span class="icon-[tabler--palette] size-5"></span>
+</button>
+
+<!-- Theme Customizer Panel -->
+<div
+  id="theme-customizer-panel" 
+  class="offcanvas offcanvas-end fixed top-0 right-0 z-50 h-full w-80 bg-base-100 shadow-xl transform translate-x-full transition-transform duration-300"
+>
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-base-300 p-4">
+    <h3 class="text-lg font-semibold">Theme Customizer</h3>
+    <button id="theme-customizer-close" class="btn btn-ghost btn-sm btn-circle">
+      <span class="icon-[tabler--x] size-4"></span>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="p-4 space-y-6 overflow-y-auto h-full">
+    <!-- Layout Direction -->
+    <div class="space-y-3">
+      <h4 class="text-base-content/70 text-sm font-medium uppercase tracking-wide">Layout Direction</h4>
+      <div class="grid grid-cols-2 gap-2">
+        <button 
+          type="button" 
+          class="direction-btn [&.direction-active]:text-primary [&.direction-active]:border-primary [&.direction-active]:bg-primary/10 border-base-content/20 border hover:border-primary/30 group flex items-center justify-center gap-2 rounded-lg p-3 transition-all duration-200" 
+          data-direction="ltr"
+        >
+          <span class="icon-[tabler--text-direction-ltr] size-5 shrink-0"></span>
+          <span class="text-sm font-medium">LTR</span>
+        </button>
+        <button 
+          type="button" 
+          class="direction-btn [&.direction-active]:text-primary [&.direction-active]:border-primary [&.direction-active]:bg-primary/10 border-base-content/20 border hover:border-primary/30 group flex items-center justify-center gap-2 rounded-lg p-3 transition-all duration-200" 
+          data-direction="rtl"
+        >
+          <span class="icon-[tabler--text-direction-rtl] size-5 shrink-0"></span>
+          <span class="text-sm font-medium">RTL</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Theme Selection -->
+    <div class="space-y-3">
+      <h4 class="text-base-content/70 text-sm font-medium uppercase tracking-wide">Theme</h4>
+      <div class="space-y-3">
+        
+        <!-- Light Theme -->
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="light"
+        >
+          <span class="text-sm font-medium">Light</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+        <!-- Dark Theme -->
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="dark"
+        >
+          <span class="text-sm font-medium">Dark</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+        <!-- Black Theme -->
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="black"
+        >
+          <span class="text-sm font-medium">Black</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+        <!-- Corporate Theme -->
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="corporate"
+        >
+          <span class="text-sm font-medium">Corporate</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+        <!-- Additional Popular Themes -->
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="luxury"
+        >
+          <span class="text-sm font-medium">Luxury</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+        <button 
+          type="button" 
+          class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between text-start [&.theme-active]:ring" 
+          data-theme="pastel"
+        >
+          <span class="text-sm font-medium">Pastel</span>
+          <span class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+              <span class="bg-primary h-4 w-1.5"></span>
+              <span class="bg-secondary h-4 w-1.5"></span>
+              <span class="bg-accent h-4 w-1.5"></span>
+              <span class="bg-neutral h-4 w-1.5"></span>
+            </span>
+            <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
+            <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
+          </span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="pt-4 border-t border-base-content/10">
+      <button 
+        id="reset-customizer" 
+        class="btn btn-outline btn-error w-full"
+      >
+        <span class="icon-[tabler--refresh] size-4"></span>
+        Reset to Default
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Overlay -->
+<div 
+  id="theme-customizer-overlay" 
+  class="fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300"
+></div>
+
+<script>
+  /**
+   * Simple Theme Customizer Script
+   * Handles theme switching after initial page load
+   */
+  
+  class ThemeCustomizer {
+    constructor() {
+      this.panel = document.getElementById('theme-customizer-panel');
+      this.overlay = document.getElementById('theme-customizer-overlay');
+      this.toggle = document.getElementById('theme-customizer-toggle');
+      this.close = document.getElementById('theme-customizer-close');
+      this.reset = document.getElementById('reset-customizer');
+      
+      this.isOpen = false;
+      this.storageKey = 'selected-theme';
+      this.directionKey = 'layout-direction';
+      
+      this.init();
+    }
+
+    init() {
+      // Load saved settings
+      this.loadSavedSettings();
+      
+      // Bind events
+      this.bindEvents();
+      
+      // Update UI
+      this.updateActiveStates();
+    }
+
+    loadSavedSettings() {
+      const savedTheme = localStorage.getItem(this.storageKey);
+      const savedDirection = localStorage.getItem(this.directionKey) || 'ltr';
+      
+      if (savedTheme) {
+        this.applyTheme(savedTheme);
+      }
+      this.applyDirection(savedDirection);
+    }
+
+    bindEvents() {
+      // Panel controls
+      this.toggle?.addEventListener('click', () => this.openPanel());
+      this.close?.addEventListener('click', () => this.closePanel());
+      this.overlay?.addEventListener('click', () => this.closePanel());
+      
+      // Theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.dataset.theme;
+          if (theme) {
+            this.changeTheme(theme);
+          }
+        });
+      });
+
+      // Direction buttons
+      document.querySelectorAll('.direction-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const direction = btn.dataset.direction;
+          if (direction) {
+            this.changeDirection(direction);
+          }
+        });
+      });
+
+      // Reset button
+      this.reset?.addEventListener('click', () => this.resetToDefault());
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen) {
+          this.closePanel();
+        }
+      });
+    }
+
+    openPanel() {
+      this.isOpen = true;
+      this.panel?.classList.remove('translate-x-full');
+      this.overlay?.classList.remove('pointer-events-none');
+      this.overlay?.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+
+    closePanel() {
+      this.isOpen = false;
+      this.panel?.classList.add('translate-x-full');
+      this.overlay?.classList.add('pointer-events-none');
+      this.overlay?.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+    }
+
+    changeTheme(theme) {
+      this.applyTheme(theme);
+      localStorage.setItem(this.storageKey, theme);
+      this.updateActiveStates();
+      
+      // Emit event for other components
+      window.dispatchEvent(new CustomEvent('theme-changed', { 
+        detail: { theme } 
+      }));
+    }
+
+    changeDirection(direction) {
+      this.applyDirection(direction);
+      localStorage.setItem(this.directionKey, direction);
+      this.updateActiveStates();
+    }
+
+    applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    applyDirection(direction) {
+      document.documentElement.setAttribute('dir', direction);
+    }
+
+    updateActiveStates() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const currentDirection = document.documentElement.getAttribute('dir') || 'ltr';
+      
+      // Update theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        const isActive = btn.dataset.theme === currentTheme;
+        btn.classList.toggle('theme-active', isActive);
+      });
+
+      // Update direction buttons
+      document.querySelectorAll('.direction-btn').forEach(btn => {
+        const isActive = btn.dataset.direction === currentDirection;
+        btn.classList.toggle('direction-active', isActive);
+      });
+    }
+
+    resetToDefault() {
+      this.changeTheme('light');
+      this.changeDirection('ltr');
+      localStorage.removeItem(this.storageKey);
+      localStorage.removeItem(this.directionKey);
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new ThemeCustomizer());
+  } else {
+    new ThemeCustomizer();
+  }
+</script>
+
+<!-- <style>
+  #theme-customizer-panel {
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .theme-btn:hover,
+  .direction-btn:hover {
+    transform: translateX(-2px);
+  }
+  
+  #theme-customizer-toggle:hover {
+    transform: translateY(-50%) scale(1.05);
+  }
+</style> -->

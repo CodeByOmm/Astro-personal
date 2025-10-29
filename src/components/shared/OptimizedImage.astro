@@ -21,7 +21,7 @@ interface Props {
   class?: string;
   fetchpriority?: 'high' | 'low' | 'auto';
   sizes?: string;
-  webp?: boolean; // Set to true if you have a .webp version
+  webp?: boolean; 
 }
 
 const { 
@@ -41,7 +41,6 @@ const webpSrc = webp ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp') : null;
 ---
 
 {webp && webpSrc ? (
-  <!-- Picture element with WebP support -->
   <picture>
     <!-- Modern browsers (WebP) -->
     <source srcset={webpSrc} type="image/webp" sizes={sizes} />
@@ -59,7 +58,6 @@ const webpSrc = webp ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp') : null;
     />
   </picture>
 ) : (
-  <!-- Standard img element -->
   <img 
     src={src} 
     alt={alt}

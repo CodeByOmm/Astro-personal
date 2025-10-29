@@ -1,6 +1,4 @@
-import {
-    siteConfig
-} from '../config.js';
+import { siteConfig } from '../config.js';
 
 /**
  * Generate page title with site suffix
@@ -8,10 +6,10 @@ import {
  * @returns {string} Complete page title
  */
 export function generatePageTitle(title) {
-    if (!title) {
-        return `${siteConfig.templateName} - ${siteConfig.templateSuffix}`;
-    }
-    return `${title} - ${siteConfig.templateName} | ${siteConfig.templateSuffix}`;
+  if (!title) {
+    return `${siteConfig.templateName} - ${siteConfig.templateSuffix}`;
+  }
+  return `Demo: ${title} | ${siteConfig.templateSuffix}`;
 }
 
 /**
@@ -20,8 +18,8 @@ export function generatePageTitle(title) {
  * @returns {string} Meta description
  */
 export function generateMetaDescription(description) {
-    if (!description) {
-        return `${siteConfig.templateName} - ${siteConfig.templateKeyword}`;
-    }
-    return description;
+  if (!description) {
+    return `${siteConfig.templateName} - ${siteConfig.templateKeyword}`;
+  }
+  return description;
 }
