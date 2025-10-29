@@ -5,9 +5,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:preview": "ASTRO_PREVIEW=true astro build",
+    "build:obfuscated": "npm run build && node scripts/obfuscate.js",
+    "build:production": "npm run build:obfuscated",
+    "preview": "npm run build:preview && ASTRO_PREVIEW=true astro preview",
+    "preview:obfuscated": "node scripts/test-server.js",
+    "verify:obfuscation": "node scripts/verify-obfuscation.js",
+    "test:obfuscated": "npm run build:obfuscated && npm run verify:obfuscation && npm run preview:obfuscated",
     "astro": "astro",
     "format": "npx prettier . --write",
-    "format:check": "prettier --check \"**/*.{js,ts,jsx,tsx,astro,css,scss,html,md,json}\""
+    "format:check": "prettier --check \"**/*.{js,ts,jsx,tsx,astro,css,scss,html,md,json}\"",
+    "obfuscate": "node scripts/obfuscate.js"
   },
   "dependencies": {
     "@astrojs/vercel": "^9.0.0",
@@ -22,6 +30,8 @@
   "devDependencies": {
     "@iconify/json": "^2.2.321",
     "@iconify/tailwind4": "^1.0.6",
+    "glob": "^10.3.10",
+    "postcss": "^8.4.32",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.1"

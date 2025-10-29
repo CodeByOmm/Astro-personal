@@ -1,0 +1,282 @@
+---
+/**
+ * Demo component to showcase navbar theme dropdown functionality
+ */
+---
+
+<section class="py-16 bg-base-100">
+  <div class="container mx-auto px-4">
+    
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-base-content mb-4">
+        🎨 Theme Customizer Demo
+      </h2>
+      <p class="text-base-content/70 text-lg max-w-2xl mx-auto">
+        Use the theme dropdown in the navbar (top right) to switch between different themes. 
+        Watch how the colors change across the entire page!
+      </p>
+    </div>
+
+    <!-- Current Theme Display -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+      
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body text-center">
+          <h3 class="card-title justify-center text-primary mb-4">
+            <span class="icon-[tabler--palette] size-6"></span>
+            Current Theme
+          </h3>
+          <div id="current-theme-name" class="text-2xl font-bold text-base-content mb-4">
+            Light
+          </div>
+          <div class="flex justify-center gap-2">
+            <span class="w-4 h-4 bg-primary rounded-full"></span>
+            <span class="w-4 h-4 bg-secondary rounded-full"></span>
+            <span class="w-4 h-4 bg-accent rounded-full"></span>
+            <span class="w-4 h-4 bg-neutral rounded-full"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body text-center">
+          <h3 class="card-title justify-center text-secondary mb-4">
+            <span class="icon-[tabler--clock] size-6"></span>
+            Last Changed
+          </h3>
+          <div id="last-change-time" class="text-xl font-medium text-base-content mb-4">
+            Page Load
+          </div>
+          <div class="badge badge-outline" id="change-source">
+            Initial
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Theme Showcase Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      
+      <div class="card bg-primary text-primary-content shadow-lg">
+        <div class="card-body">
+          <h3 class="card-title">Primary Colors</h3>
+          <p>This card showcases the primary color scheme that changes with each theme.</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary-content">Action</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-secondary text-secondary-content shadow-lg">
+        <div class="card-body">
+          <h3 class="card-title">Secondary Colors</h3>
+          <p>Secondary colors provide contrast and visual hierarchy in the design.</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-secondary-content">Action</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-accent text-accent-content shadow-lg">
+        <div class="card-body">
+          <h3 class="card-title">Accent Colors</h3>
+          <p>Accent colors are used for highlights and call-to-action elements.</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-accent-content">Action</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Interactive Demo -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h3 class="card-title text-center justify-center mb-6">
+          <span class="icon-[tabler--settings] size-6"></span>
+          Interactive Controls
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Theme Log -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Theme Changes</h4>
+            <div id="theme-log" class="bg-base-200 rounded-lg p-4 h-48 overflow-y-auto">
+              <div class="text-base-content/60 text-sm">
+                Theme changes will appear here...
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Quick Actions</h4>
+            <div class="space-y-3">
+              
+              <button id="toggle-theme" class="btn btn-outline w-full">
+                <span class="icon-[tabler--sun-moon] size-5"></span>
+                Toggle Dark/Light
+              </button>
+
+              <button id="random-theme" class="btn btn-outline w-full">
+                <span class="icon-[tabler--dice] size-5"></span>
+                Random Theme
+              </button>
+
+              <button id="system-theme" class="btn btn-outline w-full">
+                <span class="icon-[tabler--device-desktop] size-5"></span>
+                Use System Theme
+              </button>
+              
+              <button id="reset-theme" class="btn btn-error btn-outline w-full">
+                <span class="icon-[tabler--refresh] size-5"></span>
+                Reset to System
+              </button>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  /**
+   * Demo script to showcase navbar theme dropdown functionality
+   */
+  
+  class ThemeCustomizerDemo {
+    private themeLog: HTMLElement | null;
+    private currentThemeName: HTMLElement | null;
+    private lastChangeTime: HTMLElement | null;
+    private changeSource: HTMLElement | null;
+    private availableThemes: string[];
+
+    constructor() {
+      this.themeLog = document.getElementById('theme-log');
+      this.currentThemeName = document.getElementById('current-theme-name');
+      this.lastChangeTime = document.getElementById('last-change-time');
+      this.changeSource = document.getElementById('change-source');
+      
+      this.availableThemes = ['light', 'dark', 'black', 'corporate', 'luxury', 'pastel', 'system'];
+      
+      this.init();
+    }
+
+    init(): void {
+      this.bindEvents();
+      this.updateDisplay();
+      this.addLogEntry('Demo initialized', 'System');
+    }
+
+    bindEvents(): void {
+      // Listen for theme changes from navbar dropdown
+      window.addEventListener('theme-changed', (e: Event) => {
+        const customEvent = e as CustomEvent;
+        const theme = customEvent.detail.theme;
+        this.addLogEntry(`Theme changed to: ${theme}`, 'Navbar');
+        this.updateDisplay();
+        this.updateLastChange('Navbar Dropdown');
+      });
+
+      // Quick action buttons
+      document.getElementById('toggle-theme')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = current === 'light' ? 'dark' : 'light';
+        this.changeThemeViaDropdown(newTheme);
+        this.updateLastChange('Toggle Button');
+      });
+
+      document.getElementById('random-theme')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const available = this.availableThemes.filter((t: string) => t !== current && t !== 'system');
+        const random = available[Math.floor(Math.random() * available.length)];
+        this.changeThemeViaDropdown(random);
+        this.updateLastChange('Random Button');
+      });
+
+      document.getElementById('system-theme')?.addEventListener('click', () => {
+        this.changeThemeViaDropdown('system');
+        this.updateLastChange('System Button');
+      });
+
+      document.getElementById('reset-theme')?.addEventListener('click', () => {
+        this.changeThemeViaDropdown('system');
+        this.updateLastChange('Reset Button');
+      });
+    }
+
+    changeThemeViaDropdown(theme: string): void {
+      // Find and click the corresponding navbar dropdown option
+      const dropdownOption = document.querySelector(`[data-theme-value="${theme}"]`) as HTMLButtonElement;
+      if (dropdownOption) {
+        dropdownOption.click();
+      } else {
+        // Fallback - directly set theme if dropdown option not found
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('selected-theme', theme);
+      }
+    }
+
+    updateDisplay(): void {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      
+      if (this.currentThemeName) {
+        const displayName = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1);
+        this.currentThemeName.textContent = displayName;
+      }
+    }
+
+    updateLastChange(source: string): void {
+      if (this.lastChangeTime) {
+        const now = new Date();
+        this.lastChangeTime.textContent = now.toLocaleTimeString();
+      }
+      
+      if (this.changeSource) {
+        this.changeSource.textContent = source;
+      }
+    }
+
+    addLogEntry(message: string, source: string): void {
+      if (!this.themeLog) return;
+
+      const entry = document.createElement('div');
+      entry.className = 'flex items-center gap-2 mb-2 text-sm';
+      
+      const time = new Date().toLocaleTimeString();
+      const icon = source === 'Navbar' ? 'icon-[tabler--menu-2]' : 
+                   source === 'System' ? 'icon-[tabler--settings]' : 'icon-[tabler--click]';
+      
+      entry.innerHTML = `
+        <span class="${icon} size-4 text-primary shrink-0"></span>
+        <div class="flex-1">
+          <div class="text-base-content font-medium">${message}</div>
+          <div class="text-base-content/60 text-xs">${time} • ${source}</div>
+        </div>
+      `;
+      
+      this.themeLog.insertBefore(entry, this.themeLog.firstChild);
+      
+      // Keep only last 10 entries
+      while (this.themeLog.children.length > 10) {
+        const lastChild = this.themeLog.lastChild;
+        if (lastChild) {
+          this.themeLog.removeChild(lastChild);
+        }
+      }
+    }
+  }
+
+  // Initialize demo when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new ThemeCustomizerDemo());
+  } else {
+    new ThemeCustomizerDemo();
+  }
+</script>

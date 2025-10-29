@@ -1,0 +1,334 @@
+---
+/**
+ * Navbar Theme Dropdown Component
+ * Compact theme switcher for navbar integration
+ */
+---
+
+<div class="dropdown dropdown-end">
+  <!-- Theme Toggle Button -->
+  <button
+    id="navbar-theme-toggle"
+    type="button"
+    class="btn btn-ghost btn-circle"
+    role="button"
+    tabindex="0"
+    aria-label="Theme selector"
+    data-dropdown-toggle="navbar-theme-dropdown"
+  >
+    <span id="theme-icon" class="icon-[tabler--sun] size-5"></span>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <ul
+    id="navbar-theme-dropdown"
+    class="absolute right-0 top-full mt-2 w-60 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg hidden opacity-0 transition-opacity duration-200"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="navbar-theme-toggle"
+  >
+    <li class="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+      Choose Theme
+    </li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="light"
+        data-icon="sun"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150"
+        aria-pressed="false"
+      >
+        <span class="icon-[tabler--sun] size-4 shrink-0"></span>
+        <span class="flex-1">Light</span>
+        <span class="icon-[tabler--check] theme-check hidden size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="dark"
+        data-icon="moon"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150"
+        aria-pressed="false"
+      >
+        <span class="icon-[tabler--moon] size-4 shrink-0"></span>
+        <span class="flex-1">Dark</span>
+        <span class="icon-[tabler--check] theme-check hidden size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="system"
+        data-icon="sun-moon"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+        aria-pressed="true"
+      >
+        <span class="icon-[tabler--sun-moon] size-4 shrink-0"></span>
+        <span class="flex-1">System</span>
+        <span class="icon-[tabler--check] theme-check size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+
+    <li class="border-t border-gray-200 dark:border-gray-700 my-1"></li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="corporate"
+        data-icon="briefcase"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150"
+        aria-pressed="false"
+      >
+        <span class="icon-[tabler--briefcase] size-4 shrink-0"></span>
+        <span class="flex-1">Corporate</span>
+        <span class="icon-[tabler--check] theme-check hidden size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="luxury"
+        data-icon="diamond"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150"
+        aria-pressed="false"
+      >
+        <span class="icon-[tabler--diamond] size-4 shrink-0"></span>
+        <span class="flex-1">Luxury</span>
+        <span class="icon-[tabler--check] theme-check hidden size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+    
+    <li>
+      <button
+        type="button"
+        data-theme-value="pastel"
+        data-icon="palette"
+        class="theme-option flex items-center gap-3 px-4 py-2 w-full text-left text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-150"
+        aria-pressed="false"
+      >
+        <span class="icon-[tabler--palette] size-4 shrink-0"></span>
+        <span class="flex-1">Pastel</span>
+        <span class="icon-[tabler--check] theme-check hidden size-4 text-blue-600 dark:text-blue-400"></span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  /**
+   * Navbar Theme Dropdown Script
+   */
+  class NavbarThemeDropdown {
+    private dropdown: HTMLElement | null;
+    private toggle: HTMLElement | null;
+    private themeIcon: HTMLElement | null;
+    private isOpen: boolean;
+    private storageKey: string;
+    private systemTheme: string;
+    private themeIcons: Record<string, string>;
+
+    constructor() {
+      this.dropdown = document.getElementById('navbar-theme-dropdown');
+      this.toggle = document.getElementById('navbar-theme-toggle');
+      this.themeIcon = document.getElementById('theme-icon');
+      
+      this.isOpen = false;
+      this.storageKey = 'selected-theme';
+      this.systemTheme = 'system';
+      
+      // Icon mapping for themes
+      this.themeIcons = {
+        light: 'icon-[tabler--sun]',
+        dark: 'icon-[tabler--moon]', 
+        system: 'icon-[tabler--sun-moon]',
+        corporate: 'icon-[tabler--briefcase]',
+        luxury: 'icon-[tabler--diamond]',
+        pastel: 'icon-[tabler--palette]',
+        black: 'icon-[tabler--moon-filled]'
+      };
+      
+      this.init();
+    }
+
+    init() {
+      this.loadSavedTheme();
+      this.bindEvents();
+      this.updateUI();
+    }
+
+    bindEvents() {
+      // Toggle dropdown
+      this.toggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleDropdown();
+      });
+
+      // Theme selection
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', (e: Event) => {
+          e.stopPropagation();
+          const theme = (option as HTMLButtonElement).dataset.themeValue;
+          if (theme) {
+            this.selectTheme(theme);
+            this.closeDropdown();
+          }
+        });
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e: Event) => {
+        const target = e.target as Node;
+        if (this.isOpen && !this.dropdown?.contains(target) && !this.toggle?.contains(target)) {
+          this.closeDropdown();
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen) {
+          this.closeDropdown();
+        }
+      });
+
+      // Listen for system theme changes
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          if (this.getCurrentTheme() === 'system') {
+            this.applySystemTheme();
+          }
+        });
+      }
+    }
+
+    toggleDropdown() {
+      if (this.isOpen) {
+        this.closeDropdown();
+      } else {
+        this.openDropdown();
+      }
+    }
+
+    openDropdown() {
+      this.isOpen = true;
+      if (this.dropdown) {
+        this.dropdown.classList.remove('hidden');
+        this.dropdown.classList.remove('opacity-0');
+        this.dropdown.classList.add('opacity-100');
+      }
+      this.toggle?.setAttribute('aria-expanded', 'true');
+    }
+
+    closeDropdown() {
+      this.isOpen = false;
+      if (this.dropdown) {
+        this.dropdown.classList.add('opacity-0');
+        this.dropdown.classList.remove('opacity-100');
+        setTimeout(() => {
+          if (!this.isOpen) {
+            this.dropdown?.classList.add('hidden');
+          }
+        }, 200);
+      }
+      this.toggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    selectTheme(theme: string): void {
+      // Save preference
+      localStorage.setItem(this.storageKey, theme);
+      
+      // Apply theme
+      this.applyTheme(theme);
+      
+      // Update UI
+      this.updateUI();
+      
+      // Emit event for other components
+      window.dispatchEvent(new CustomEvent('theme-changed', {
+        detail: { theme: this.getActualTheme(theme) }
+      }));
+    }
+
+    applyTheme(theme: string): void {
+      if (theme === 'system') {
+        this.applySystemTheme();
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    }
+
+    applySystemTheme() {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemTheme = prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', systemTheme);
+    }
+
+    getCurrentTheme() {
+      return localStorage.getItem(this.storageKey) || 'system';
+    }
+
+    getActualTheme(theme: string): string {
+      if (theme === 'system') {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return prefersDark ? 'dark' : 'light';
+      }
+      return theme;
+    }
+
+    loadSavedTheme(): void {
+      const savedTheme = this.getCurrentTheme();
+      this.applyTheme(savedTheme);
+    }
+
+    updateUI(): void {
+      const currentTheme = this.getCurrentTheme();
+      
+      // Update toggle button icon
+      if (this.themeIcon) {
+        // Remove all icon classes
+        Object.values(this.themeIcons).forEach(iconClass => {
+          this.themeIcon?.classList.remove(iconClass);
+        });
+        
+        // Add current theme icon
+        const iconClass = this.themeIcons[currentTheme] || this.themeIcons.system;
+        this.themeIcon.classList.add(iconClass);
+      }
+      
+      // Update active state in dropdown
+      document.querySelectorAll('.theme-option').forEach(option => {
+        const isActive = (option as HTMLButtonElement).dataset.themeValue === currentTheme;
+        
+        // Update aria-pressed
+        option.setAttribute('aria-pressed', isActive.toString());
+        
+        // Update visual state
+        if (isActive) {
+          option.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-600', 'dark:text-blue-400');
+          option.classList.remove('text-gray-700', 'dark:text-gray-200');
+        } else {
+          option.classList.remove('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-600', 'dark:text-blue-400');
+          option.classList.add('text-gray-700', 'dark:text-gray-200');
+        }
+        
+        // Update check icon
+        const checkIcon = option.querySelector('.theme-check');
+        if (checkIcon) {
+          checkIcon.classList.toggle('hidden', !isActive);
+        }
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new NavbarThemeDropdown());
+  } else {
+    new NavbarThemeDropdown();
+  }
+</script>
+
